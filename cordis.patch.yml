@@ -1,0 +1,33 @@
+# The dsh-chat-cli bundle patch: an interactive, line-oriented CLI over dsh-base.
+# It mounts no Host, HTTP server, browser client, or full-screen terminal UI.
+
+- id: system-prompt
+  config:
+    persona: >-
+      You are a coding agent powered by the {{model}} model. Your working directory is {{cwd}}.
+
+# Module reload can replace the active input owner while it is waiting on the
+# terminal. User patch files remain live through the launcher's watch-only HMR.
+- id: hmr
+  disabled: true
+
+- id: tools
+  config:
+    mode: !!js process.env.DSH_TOOLS_MODE
+
+- insert:
+    - id: code-runtime
+      name: '@deepseek-ai/dsh-code-runtime-worker-thread'
+
+    - id: tool-ask-user
+      name: '@deepseek-ai/dsh-tool-ask-user'
+
+    - id: chat-startup
+      name: 'dsh-chat-cli/startup'
+
+    - id: chat-runner
+      name: 'dsh-chat-cli'
+      inject: [chatStartup]
+      config:
+        resume: !!js ctx.chatStartup.resume
+        showReasoning: !!js ctx.chatStartup.showReasoning

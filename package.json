@@ -1,0 +1,68 @@
+{
+  "name": "dsh-chat-cli",
+  "version": "0.1.0",
+  "description": "A line-oriented multi-turn chat bundle for DeepSeek Harness",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liangmianya/dsh-chat-cli.git"
+  },
+  "type": "module",
+  "main": "./lib/index.mjs",
+  "types": "./lib/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.mts",
+      "default": "./lib/index.mjs"
+    },
+    "./startup": {
+      "types": "./lib/startup.d.mts",
+      "default": "./lib/startup.mjs"
+    },
+    "./invariant": {
+      "types": "./lib/invariant.d.mts",
+      "default": "./lib/invariant.mjs"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md",
+    "install.sh",
+    "dsh-chat.cmd"
+  ],
+  "scripts": {
+    "build": "tsdown src/index.ts src/startup.ts src/invariant.ts --format esm --dts --out-dir lib",
+    "prepare": "pnpm run build"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-invariants": "^0.1.0-rc.6"
+  },
+  "dependencies": {
+    "@deepseek-ai/dsh-agent": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-agent-default-model": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-cmdline": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-code-runtime-worker-thread": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-commands": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-session": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tool-ask-user": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-user-approval": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-user-questions": "^0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "commander": "^15.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsdown": "^0.22.2",
+    "typescript": "^6.0.3"
+  }
+}
